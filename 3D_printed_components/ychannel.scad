@@ -99,6 +99,10 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
 difference(){
     translate([-35,-15,-1]){
         cube([50,30,6.9]);
+        
     }//end translate    
+    //translate([-35.5,-15.5,-5]){
+    //        cube([51,31,6.9]);
+    //        }
     yshape(holes=1);
 }//end difference
