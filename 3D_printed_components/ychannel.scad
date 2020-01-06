@@ -9,6 +9,7 @@ tol=0.1;
 channelx = 25.4;
 channely = 3;
 channelz = 3;
+
 shortarmx = 15;
 shortarmy = channely-1;
 
@@ -36,12 +37,8 @@ module screwbit(diam1,diam2,height1,height2){
     }//end module screwbit  
 ///
 
-
-
-
+module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy=channely,z=channelz,holes=0){
     
-
-module yshape(shortarmx,shortarmy,longarmx,longarmy,z,holes){
     rotate([0,0,45]){
         translate([-shortarmy,0,0]){
             cube([shortarmx,shortarmy,z]);
@@ -73,17 +70,18 @@ module yshape(shortarmx,shortarmy,longarmx,longarmy,z,holes){
                 translate([longarmx-2,longarmy/2,z-.5]){
                     screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
                 }//end translate
+                translate([longarmx/2-2,longarmy/2,z-.5]){
+                    screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
+                }//end translate
             }//end if
         }//end rotate
     }//end translate
     
         
         
-        
     
  }//end module
 /////
-
 module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
 
     difference(){
@@ -97,56 +95,10 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
  }//end module
  ////
  
- 
- 
-  
 /////////////////////////////////////////////////
-    
-    
-/*
-//difference(){
-    translate([-1*channelx-channelx/5,-shortarmx,-channelz/2]){
-        %cube([2*channelx,2*shortarmx,2*channelz+1]);
-    }//end translate
-    
-rotate([0,0,45]){
-    translate([-shortarmy,0,0]){
-        arm(shortarmx,shortarmy,channelz);
-    }//end translate
-}//end rotate
-
-mirror([0,1,0]){
-    rotate([0,0,45]){
-        translate([-shortarmy,0,0]){
-            arm(shortarmx,shortarmy,channelz);
-        }//end translate
-     }//end rotate
-    
-}//end mirror
-translate([0,channely/2,0]){
-rotate([0,0,180]){
-    
-        arm(channelx,channely,channelz);
-    }//end translate
-}//end rotate
-
-//}// end difference
-*/
-
-translate([-1.1*channelx-channelx/5,-1.25*shortarmx,-channelz/2]){
-    %cube([2*channelx,2.5*shortarmx,2*channelz+1]);
-    }//end translate
-union(){
-    yshape(shortarmx,shortarmy,channelx,channely,channelz,1);
-    //translate([5,0,3.6]){
-    //    yshapedring(shortarmx+8,shortarmy+8,channelx+8,channely+8,1,2);
-    //}// end translate
-    
- }//end union
- 
- 
-//minkowski(){
-// yshape(18,8,28,8,4);
-// translate([1,1,0])
-// cylinder(d=2,h=1);
-//}
+difference(){
+    translate([-35,-15,-1]){
+        cube([50,30,6.9]);
+    }//end translate    
+    yshape(holes=1);
+}//end difference
