@@ -8,7 +8,7 @@ tol=0.1;
 //channels dimensions
 channelx = 25.4;
 channely = 3;
-channelz = 3;
+channelz = 1;
 
 shortarmx = 15;
 shortarmy = channely-1;
@@ -20,9 +20,14 @@ flined = 5;
 
 //electrode holder dimensions
 polyamided = 0.78;
-polyamideh  = channelz/2;
-plasticholderd = 4.42;
+polyamideh  = 5;//channelz/2;
+plasticholderd = 4.62;
 plasticholderh = (channelz+1)/2;
+
+// luer fitting
+luerh = 3;
+luerd = 1;
+
 //////////////////////////////////////////////////
 
 /////////// modules /////////////////////////////
@@ -44,7 +49,7 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
             cube([shortarmx,shortarmy,z]);
             if (holes==1){
                 translate([shortarmx-2,shortarmy/2,z-.5]){
-                    screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
+                    screwbit(luerd+2*tol,luerd+2*tol,luerh,luerh);
                 }//end translate
             }//end if
         }//end translate
@@ -56,7 +61,7 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
                 cube([shortarmx,shortarmy,z]);
                 if (holes==1){
                     translate([shortarmx-2,shortarmy/2,z-.5]){
-                        screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
+                        screwbit(luerd+2*tol,luerd+2*tol,luerh,luerh);
                 }//end translate
             }//end if
             }//end translate
@@ -68,15 +73,21 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
             cube([longarmx,longarmy,z]);
             if (holes==1){
                 translate([longarmx-2,longarmy/2,z-.5]){
-                    screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
+                    screwbit(luerd+2*tol,luerd+tol,luerh,luerh);
                 }//end translate
                 translate([longarmx/2-2,longarmy/2,z-.5]){
-                    screwbit(polyamided+tol,plasticholderd,polyamideh,plasticholderh);
+                    screwbit(polyamided+2*tol,plasticholderd+2*tol,polyamideh,plasticholderh);
                 }//end translate
             }//end if
         }//end rotate
     }//end translate
     
+    //drain hole
+    translate([-channelx,0,channelz/2]){
+    rotate([0,-90,0]){
+        screwbit(diam1=0.9,diam2=2,height1=2,height2=3);
+        }//end rotate
+    }//end translate
         
         
     
@@ -88,7 +99,7 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
        yshape(shortarmx,shortarmy,longarmx,longarmy,ringz,0);
         
         translate([-ringt,0,-1]){
-            yshape(shortarmx-2*ringt,shortarmy-2*ringt,longarmx-2*ringt,            longarmy-2*ringt,ringz+2,0);
+            yshape(shortarmx-2*ringt,shortarmy-2*ringt,longarmx-2*ringt,longarmy-2*ringt,ringz+2,0);
         }//end translate
     }
  
@@ -96,13 +107,16 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
  ////
  
 /////////////////////////////////////////////////
-difference(){
-    translate([-35,-15,-1]){
-        cube([50,30,6.9]);
+//difference(){
+    translate([-30,-15,-1]){
+        %cube([41,30,channelz+2]);
         
     }//end translate    
-    //translate([-35.5,-15.5,-5]){
-    //        cube([51,31,6.9]);
+//    translate([-35.5,-18.5,-2]){
+//            %cube([27,15,10]);
+//            }
+    //translate([-35.5,4,-2]){
+    //        cube([27,15,10]);
     //        }
     yshape(holes=1);
-}//end difference
+//}//end difference
