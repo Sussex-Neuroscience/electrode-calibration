@@ -1,15 +1,26 @@
 
+///////////////////////////////////////////
+// Y CHANNEL microfluidic chamber        //
+// to be used for electrode calibration  //
+// created by AM Chagas 20191120         //
+// CC BY SA v4.0                         //
+///////////////////////////////////////////
 
-
+// fn defines how smooth circles/cylinders will be
 $fn=30;
+
+// tol is a parameter to compensate for differences in 
+// different 3d printers - higher values make holes bigger
+// and looser fits
 tol=0.1;
 
 
 //channels dimensions
 channelx = 25.4;
 channely = 3;
-channelz = 1;
+channelz = 0.2;
 
+//dimensions of the "Y" short arms
 shortarmx = 15;
 shortarmy = channely-1;
 
@@ -32,6 +43,7 @@ luerd = 1;
 
 /////////// modules /////////////////////////////
 
+// module to create a screw like structure
 module screwbit(diam1,diam2,height1,height2){
     union(){
     cylinder(d=diam1,h=height1);
@@ -42,6 +54,7 @@ module screwbit(diam1,diam2,height1,height2){
     }//end module screwbit  
 ///
 
+// create a Y shape
 module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy=channely,z=channelz,holes=0){
     
     rotate([0,0,45]){
@@ -93,6 +106,8 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
     
  }//end module
 /////
+ 
+// a ring in Y shape (in case a rubber seal is needed)
 module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
 
     difference(){
@@ -105,6 +120,8 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
  
  }//end module
  ////
+ 
+ 
  
 /////////////////////////////////////////////////
 //difference(){
