@@ -14,6 +14,7 @@ $fn=30;
 // and looser fits
 tol=0.1;
 
+test=0;
 
 //channels dimensions
 channelx = 25.4;
@@ -30,18 +31,22 @@ shortarmy = channely-1;
 flined = 5;
 
 //electrode holder dimensions
-polyamided = 0.78;
-polyamideh  = 5;//channelz/2;
-plasticholderd = 4.62;
-plasticholderh = (channelz+1)/2;
+polyamided = 0.6;
+polyamideh  = 0.4;//channelz/2;
+plasticholderd = 2.83;
+plasticholderh = 5;
 
+slity = 0.78+tol;
+slitx = 4.23+tol;
 // luer fitting
 luerh = 3;
-luerd = 1;
+luerd = 4.18;//2.3;
 
 //////////////////////////////////////////////////
 
 /////////// modules /////////////////////////////
+
+
 
 // module to create a screw like structure
 module screwbit(diam1,diam2,height1,height2){
@@ -54,6 +59,14 @@ module screwbit(diam1,diam2,height1,height2){
     }//end module screwbit  
 ///
 
+module micromanipulatorbase(){
+screwbit(polyamided+2*tol,plasticholderd+2*tol,polyamideh,plasticholderh);
+translate([0,-slity/2,polyamideh]){
+    cube([slitx,slity,plasticholderh]);
+    }//end translate
+}//end module
+
+
 // create a Y shape
 module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy=channely,z=channelz,holes=0){
     
@@ -61,8 +74,8 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
         translate([-shortarmy,0,0]){
             cube([shortarmx,shortarmy,z]);
             if (holes==1){
-                translate([shortarmx-2,shortarmy/2,z-.5]){
-                    screwbit(luerd+2*tol,luerd+2*tol,luerh,luerh);
+                translate([shortarmx-2,shortarmy/2,channelz/2]){
+                    screwbit(channely/4,luerd+2*tol,0.5,luerh);
                 }//end translate
             }//end if
         }//end translate
@@ -73,8 +86,8 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
             translate([-shortarmy,0,0]){
                 cube([shortarmx,shortarmy,z]);
                 if (holes==1){
-                    translate([shortarmx-2,shortarmy/2,z-.5]){
-                        screwbit(luerd+2*tol,luerd+2*tol,luerh,luerh);
+                    translate([shortarmx-2,shortarmy/2,channelz/2]){
+                        screwbit(channely/4,luerd+2*tol,0.5,luerh);
                 }//end translate
             }//end if
             }//end translate
@@ -85,20 +98,20 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
         rotate([0,0,180]){
             cube([longarmx,longarmy,z]);
             if (holes==1){
-                translate([longarmx-2,longarmy/2,z-.5]){
-                    screwbit(luerd+2*tol,luerd+tol,luerh,luerh);
+                translate([longarmx-2,longarmy/2,channelz/2]){
+                    screwbit(channely/4,luerd+tol,0.5,luerh);
                 }//end translate
-                translate([longarmx/2-2,longarmy/2,z-.5]){
-                    screwbit(polyamided+2*tol,plasticholderd+2*tol,polyamideh,plasticholderh);
+                translate([longarmx/2-2,longarmy/2,channelz/2]){
+                    micromanipulatorbase();
                 }//end translate
             }//end if
         }//end rotate
     }//end translate
     
     //drain hole
-    translate([-channelx,0,channelz/2]){
+    translate([-channelx+0.1,0,channelz/2]){
     rotate([0,-90,0]){
-        screwbit(diam1=0.9,diam2=2,height1=2,height2=3);
+        screwbit(diam1=0.8,diam2=luerd+2*tol,height1=2,height2=3);
         }//end rotate
     }//end translate
         
@@ -124,16 +137,24 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
  
  
 /////////////////////////////////////////////////
-//difference(){
-    translate([-30,-15,-1]){
-        %cube([41,30,channelz+2]);
+
+difference(){
+    translate([-30,-15,-2.5]){
+        cube([41,30,channelz+5]);
         
     }//end translate    
-//    translate([-35.5,-18.5,-2]){
-//            %cube([27,15,10]);
-//            }
-    //translate([-35.5,4,-2]){
-    //        cube([27,15,10]);
-    //        }
     yshape(holes=1);
-//}//end difference
+    if (test==1){
+    translate([-30.5,-18.5,-4]){
+            cube([30,15,10]);
+            }
+    translate([-30.5,4,-4]){
+            cube([30,15,10]);
+            }
+    translate([-4,-20,-5]){
+            cube([20,40,10]);
+            }//endtranslate
+        }//end if
+        
+    
+}//end difference
