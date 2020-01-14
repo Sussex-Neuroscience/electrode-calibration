@@ -7,19 +7,23 @@
 ///////////////////////////////////////////
 
 // fn defines how smooth circles/cylinders will be
-$fn=30;
+$fn = 30;
 
 // tol is a parameter to compensate for differences in 
 // different 3d printers - higher values make holes bigger
 // and looser fits
-tol=0.1;
+tol = 0.1;
 
-test=0;
+//if printing test parts, set this to 1
+test = 0;
+
+//set this to 1 so that some parts of the block are made thinner
+savematerial = 0;
 
 //channels dimensions
 channelx = 25.4;
 channely = 3;
-channelz = 0.2;
+channelz = 0.6;
 
 //dimensions of the "Y" short arms
 shortarmx = 15;
@@ -27,8 +31,7 @@ shortarmy = channely-1;
 
 
 
-// fluid line dimensions
-flined = 5;
+
 
 //electrode holder dimensions
 polyamided = 0.6;
@@ -36,11 +39,11 @@ polyamideh  = 0.4;//channelz/2;
 plasticholderd = 2.83;
 plasticholderh = 5;
 
-slity = 0.78+tol;
+slity = 0.77+tol;
 slitx = 4.23+tol;
 // luer fitting
 luerh = 3;
-luerd = 4.18;//2.3;
+luerd = 4.1;//2.3;
 
 //////////////////////////////////////////////////
 
@@ -61,7 +64,7 @@ module screwbit(diam1,diam2,height1,height2){
 
 module micromanipulatorbase(){
 screwbit(polyamided+2*tol,plasticholderd+2*tol,polyamideh,plasticholderh);
-translate([0,-slity/2,polyamideh]){
+translate([-plasticholderd/2,-slity/2,polyamideh]){
     cube([slitx,slity,plasticholderh]);
     }//end translate
 }//end module
@@ -141,17 +144,29 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
 difference(){
     translate([-30,-15,-2.5]){
         cube([41,30,channelz+5]);
-        
-    }//end translate    
+    }//end translate   
     yshape(holes=1);
+   
+    
+    if (savematerial==1){ 
+        translate([-30.5,-18.5,-1]){
+            cube([30,15,5]);
+            }//end translate
+        translate([-30.5,4,-1]){
+            cube([30,15,10]);
+            }//end translate
+    }//end if
+   
+  
+   
     if (test==1){
-    translate([-30.5,-18.5,-4]){
+        translate([-30.5,-18.5,-4]){
             cube([30,15,10]);
-            }
-    translate([-30.5,4,-4]){
+            }// end translate
+        translate([-30.5,4,-4]){
             cube([30,15,10]);
-            }
-    translate([-4,-20,-5]){
+            }// end translate
+        translate([-4,-20,-5]){
             cube([20,40,10]);
             }//endtranslate
         }//end if
