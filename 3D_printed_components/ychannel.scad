@@ -7,7 +7,7 @@
 ///////////////////////////////////////////
 
 // fn defines how smooth circles/cylinders will be
-$fn = 30;
+$fn = 50;
 
 // tol is a parameter to compensate for differences in 
 // different 3d printers - higher values make holes bigger
@@ -43,7 +43,7 @@ slity = 0.77+tol;
 slitx = 4.23+tol;
 // luer fitting
 luerh = 3;
-luerd = 4.1;//2.3;
+luerd = 4.0;//2.3;
 
 //////////////////////////////////////////////////
 
