@@ -18,13 +18,14 @@ tol = 0.1;
 test = 0;
 
 //set this to 1 so that some parts of the block are made thinner
-savematerial = 0;
+savematerial = 1;
 
 //channels dimensions
 channelx = 25.4;
-channely = 3;
-channelz = 0.6;
+channely = 2;
+channelz = 0.5;
 
+channelaccessd = channely-1;
 //dimensions of the "Y" short arms
 shortarmx = 15;
 shortarmy = channely-1;
@@ -42,7 +43,7 @@ plasticholderh = 5;
 slity = 0.77+tol;
 slitx = 4.23+tol;
 // luer fitting
-luerh = 3;
+luerh = 5;
 luerd = 4.0;//2.3;
 
 //////////////////////////////////////////////////
@@ -78,7 +79,7 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
             cube([shortarmx,shortarmy,z]);
             if (holes==1){
                 translate([shortarmx-2,shortarmy/2,channelz/2]){
-                    screwbit(channely/4,luerd+2*tol,0.5,luerh);
+                    screwbit(channelaccessd,luerd+2*tol,0.5,luerh);
                 }//end translate
             }//end if
         }//end translate
@@ -90,7 +91,7 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
                 cube([shortarmx,shortarmy,z]);
                 if (holes==1){
                     translate([shortarmx-2,shortarmy/2,channelz/2]){
-                        screwbit(channely/4,luerd+2*tol,0.5,luerh);
+                        screwbit(channelaccessd,luerd+2*tol,0.5,luerh);
                 }//end translate
             }//end if
             }//end translate
@@ -101,8 +102,8 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
         rotate([0,0,180]){
             cube([longarmx,longarmy,z]);
             if (holes==1){
-                translate([longarmx-2,longarmy/2,channelz/2]){
-                    screwbit(channely/4,luerd+tol,0.5,luerh);
+                translate([longarmx-3,longarmy/2,channelz/2]){
+                    screwbit(channelaccessd,luerd+tol,0.5,luerh);
                 }//end translate
                 translate([longarmx/2-2,longarmy/2,channelz/2]){
                     micromanipulatorbase();
@@ -112,10 +113,13 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
     }//end translate
     
     //drain hole
-    translate([-channelx+0.1,0,channelz/2]){
-    rotate([0,-90,0]){
-        screwbit(diam1=0.8,diam2=luerd+2*tol,height1=2,height2=3);
+    translate([-channelx+1,0,channelz/2]){
+        rotate([0,-90,0]){
+        screwbit(diam1=0.5,diam2=luerd+2*tol,height1=2,height2=4);
         }//end rotate
+        translate([-2,-channely/2,-(channelz+1)/2]){
+            cube([1.1,channely,channelz+1]);
+        }//end translate
     }//end translate
         
         
@@ -142,9 +146,23 @@ module yshapedring(shortarmx,shortarmy,longarmx,longarmy,ringz,ringt){
 /////////////////////////////////////////////////
 
 difference(){
-    translate([-30,-15,-2.5]){
-        cube([41,30,channelz+5]);
-    }//end translate   
+    union(){
+        translate([-30,-15,-2.5]){
+            cube([41,30,channelz+5]);
+            translate([31+luerd,luerd-0.5,1]){
+                cube([luerd+2,luerd+2,7]);
+                }//end translate
+            translate([31+luerd,17+luerd-0.5,1]){
+                cube([luerd+2,luerd+2,7]);
+                }//end translate
+            translate([11.5+luerd,8.5+luerd-0.5,1]){
+                cube([luerd+2,luerd+2,7]);
+                }//end translate
+            translate([luerd,8.5+luerd-0.5,1]){
+                cube([luerd+2,luerd+2,7]);
+                }//end translate
+        }//end translate   
+    }//end union
     yshape(holes=1);
    
     
@@ -161,13 +179,13 @@ difference(){
    
     if (test==1){
         translate([-30.5,-18.5,-4]){
-            cube([30,15,10]);
+            cube([30,15,15]);
             }// end translate
         translate([-30.5,4,-4]){
-            cube([30,15,10]);
+            cube([30,15,20]);
             }// end translate
         translate([-4,-20,-5]){
-            cube([20,40,10]);
+            cube([20,40,20]);
             }//endtranslate
         }//end if
         
