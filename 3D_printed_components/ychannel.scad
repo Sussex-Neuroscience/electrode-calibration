@@ -15,10 +15,10 @@ $fn = 50;
 tol = 0.1;
 
 //if printing test parts, set this to 1
-test = 0;
+test = 1;
 
 //set this to 1 so that some parts of the block are made thinner
-savematerial = 1;
+savematerial = 0;
 
 //channels dimensions
 channelx = 25.4;
@@ -115,7 +115,7 @@ module yshape(shortarmx=shortarmx,shortarmy=shortarmy,longarmx=channelx,longarmy
     //drain hole
     translate([-channelx+1,0,channelz/2]){
         rotate([0,-90,0]){
-        screwbit(diam1=0.5,diam2=luerd+2*tol,height1=2,height2=4);
+        screwbit(diam1=0.5,diam2=luerd+tol,height1=2,height2=4);
         }//end rotate
         translate([-2,-channely/2,-(channelz+1)/2]){
             cube([1.1,channely,channelz+1]);
@@ -155,9 +155,9 @@ difference(){
             translate([31+luerd,17+luerd-0.5,1]){
                 cube([luerd+2,luerd+2,7]);
                 }//end translate
-            translate([11.5+luerd,8.5+luerd-0.5,1]){
-                cube([luerd+2,luerd+2,7]);
-                }//end translate
+            //translate([11.5+luerd,8.5+luerd-0.5,1]){
+            //    %cube([luerd+2,luerd+2,7]);
+            //    }//end translate
             translate([luerd,8.5+luerd-0.5,1]){
                 cube([luerd+2,luerd+2,7]);
                 }//end translate
