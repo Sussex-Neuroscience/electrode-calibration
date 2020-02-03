@@ -1,4 +1,5 @@
 # Printed parts
+---
 
 ### Printer:
 
@@ -13,6 +14,7 @@ Since the system needs to be watertight and the internal volumes of the chamber 
 - Once the main parted is printed, the inlets and outlets are plugged in sequence, so that at any time there are only two open. This way we can flush the system with isopropyl alcohol with a syringe and dissolve/push out the remaining resin that is inside the system. this should be done quickly and trying to avoid light as the resin cures when exposed to it.
 
 - After flushing the system, the part should be cleaned and curated as described by the printer manufacturer.
+---
 
 ### Files:
 
