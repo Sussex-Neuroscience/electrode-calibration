@@ -15,10 +15,10 @@ $fn = 50;
 tol = 0.1;
 
 //if printing test parts, set this to 1
-test = 1;
+test = 0;
 
 //set this to 1 so that some parts of the block are made thinner
-savematerial = 0;
+savematerial = 1;
 
 //channels dimensions
 channelx = 25.4;
@@ -28,7 +28,7 @@ channelz = 0.5;
 channelaccessd = channely-1;
 //dimensions of the "Y" short arms
 shortarmx = 15;
-shortarmy = channely-1;
+shortarmy = channely-0.5;
 
 
 
