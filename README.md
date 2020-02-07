@@ -11,3 +11,5 @@ Based on [Sinkala _et al_ 2012](https://github.com/Sussex-Neuroscience/electrode
 - [datasheets](datasheets) contains the datasheets for the off the shelf components (luer fittings, electrode drive, etc) used in this project.  
 - [3D_printed_components](3D_printed_components) contains the files necessary for printing the microfluidic chamber.
 ---
+
+![](images/complete_chamber.jpg)
