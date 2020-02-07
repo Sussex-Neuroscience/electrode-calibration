@@ -12,4 +12,5 @@ Based on [Sinkala _et al_ 2012](https://github.com/Sussex-Neuroscience/electrode
 - [3D_printed_components](3D_printed_components) contains the files necessary for printing the microfluidic chamber.
 ---
 
-![](images/complete_chamber.jpg)
+|![](images/complete_chamber.jpg)|![](images/chamber_w_connectors.jpg)|
+|---|---|
